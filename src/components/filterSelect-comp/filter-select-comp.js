@@ -5,13 +5,13 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 ///////////////////////////////
-import { updateTask } from '../../redux/actions/update-task';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
+import { filterTasks } from '../../redux/actions/filter-task';
 //////////////////////////////////
 
-const SelectComponent = (props) => {
-  const { title, defaultStatus, updateTask, id } = props;
+const FilterSelectComponent = (props) => {
+  const { title, defaultStatus, filterTasks } = props;
 
   const [status, setStatus] = React.useState(defaultStatus);
 
@@ -22,8 +22,9 @@ const SelectComponent = (props) => {
   };
 
   React.useEffect(() => {
-    updateTask(id, status);
-  });
+    filterTasks(undefined, status);
+  }, [status, filterTasks]);
+
   return (
     <FormControl variant="filled" size="small" sx={{ m: 1, minWidth: 170, mr: 0, ml: 0 }}>
       <InputLabel id="demo-simple-select-helper-label">{title}</InputLabel>
@@ -43,4 +44,4 @@ const SelectComponent = (props) => {
   );
 };
 
-export default connect(null, { updateTask })(SelectComponent);
+export default connect(null, { filterTasks })(FilterSelectComponent);
